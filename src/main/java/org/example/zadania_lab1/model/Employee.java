@@ -21,9 +21,12 @@ public class Employee {
     @Column(nullable = false)
     private BigDecimal salary;
 
-    public Employee() {}
+    protected Employee() {
+        super();
+    }
 
     public Employee(String firstName, String lastName, BigDecimal salary) {
+        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.salary = salary;
@@ -59,5 +62,15 @@ public class Employee {
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 }
