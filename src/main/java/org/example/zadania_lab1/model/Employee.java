@@ -20,4 +20,12 @@ public class Employee {
 
     @Column(nullable = false)
     private BigDecimal salary;
+
+    public Employee() {}
+
+    public Employee(String firstName, String lastName, BigDecimal salary) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.salary = salary;
+    }
 }
