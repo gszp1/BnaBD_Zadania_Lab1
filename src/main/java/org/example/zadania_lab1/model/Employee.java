@@ -3,6 +3,7 @@ package org.example.zadania_lab1.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "employees")
@@ -21,15 +22,19 @@ public class Employee {
     @Column(nullable = false)
     private BigDecimal salary;
 
+    @Column(name = "employment_date", nullable = false)
+    private LocalDate employmentDate;
+
     protected Employee() {
         super();
     }
 
-    public Employee(String firstName, String lastName, BigDecimal salary) {
+    public Employee(String firstName, String lastName, BigDecimal salary, LocalDate employmentDate) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.salary = salary;
+        this.employmentDate = employmentDate;
     }
 
     public Long getId() {
@@ -64,6 +69,14 @@ public class Employee {
         this.salary = salary;
     }
 
+    public LocalDate getEmploymentDate() {
+        return employmentDate;
+    }
+
+    public void setEmploymentDate(LocalDate employmentDate) {
+        this.employmentDate = employmentDate;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -71,6 +84,7 @@ public class Employee {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", salary=" + salary +
+                ", employmentDate=" + employmentDate +
                 '}';
     }
 }
