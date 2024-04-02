@@ -25,6 +25,8 @@ public class RunAtStart {
         return args -> {
             employeeRepository.save(new Employee("Tomasz", "Nowak", new BigDecimal("4500.00")));
             employeeRepository.save(new Employee("Jan", "Kowalski", new BigDecimal("3699.45")));
+            Iterable<Employee> employees = employeeRepository.findAll();
+            employees.forEach(System.out::println);
         };
     }
 }
