@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "departments")
@@ -12,6 +14,11 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "department",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    private List<Employee> employees = new ArrayList<>();
 
     @Column(nullable = false, length = 50)
     private String name;
@@ -29,8 +36,8 @@ public class Department {
         super();
     }
 
-    public Department(String name, String description, BigDecimal budget, LocalDate establishmentDate) {
-        super();
+    public Department(String name, String description, BigDecimal budget,
+                      LocalDate establishmentDate) {
         this.name = name;
         this.description = description;
         this.budget = budget;
@@ -77,10 +84,19 @@ public class Department {
         this.establishmentDate = establishmentDate;
     }
 
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
     @Override
     public String toString() {
         return "Department{" +
                 "id=" + id +
+                ", employees=" + employees +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", budget=" + budget +
