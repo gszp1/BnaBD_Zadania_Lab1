@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class RunAtStart {
@@ -45,6 +47,10 @@ public class RunAtStart {
             Iterable<Employee> employees = employeeRepository.findAll();
             employees.forEach(System.out::println);
 
+            System.out.println("\nAll departments:");
+            Iterable<Department> retrievedDepartments = departmentRepository.findAll();
+            retrievedDepartments.forEach(System.out::println);
+
             System.out.println("\nEmployees with last names starting with K:");
             Iterable<Employee> employeesWithLastNameStartingWithK = employeeRepository
                     .findAllByFirstLetterOfLastName('K');
@@ -57,8 +63,44 @@ public class RunAtStart {
 
             // Update Employees salaries and second department name.
 
+            System.out.println("\nUpdating employees salaries by multiplying them by 1.5:");
+            employees = employeeRepository.findAll();
+            employees.forEach(employee -> employee.setSalary(employee
+                    .getSalary()
+                    .multiply(new BigDecimal("1.5")))
+            );
+            employeeRepository.saveAll(employees);
+            employees = employeeRepository.findAll();
+            employees.forEach(System.out::println);
+
+            System.out.println("\nChange DataAnalysis department name to BigData:");
+            List<Department> departments = departmentRepository.findAll();
+            Optional<Department> foundDepartment = departments
+                    .stream()
+                    .filter(dept-> dept.getName().equals("DataAnalysis"))
+                    .findFirst();
+            if (foundDepartment.isPresent()) {
+                department = foundDepartment.get();
+                department.setName("BigData");
+                departmentRepository.save(department);
+            }
+            departments = departmentRepository.findAll();
+            departments.forEach(System.out::println);
 
             // Remove second department and employees from first one.
+
+            System.out.println("\nRemove first department:");
+            foundDepartment = departmentRepository.findById(1L);
+            foundDepartment.ifPresent(departmentRepository::delete);
+            retrievedDepartments = departmentRepository.findAll();
+            retrievedDepartments.forEach(System.out::println);
+
+            System.out.println("\nRemove first employee from BigData department:");
+            Optional<Employee> employee =
+                    employeeRepository.findFirstByDepartmentName("BigData");
+            employee.ifPresent(employeeRepository::delete);
+            employeesByDepartment = employeeRepository.findAllByDepartmentName("BigData");
+            employeesByDepartment.forEach(System.out::println);
         };
     }
 

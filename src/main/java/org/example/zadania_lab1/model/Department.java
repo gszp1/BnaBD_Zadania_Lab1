@@ -17,7 +17,8 @@ public class Department {
 
     @OneToMany(mappedBy = "department",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true
+            )
     private List<Employee> employees = new ArrayList<>();
 
     @Column(nullable = false, length = 50)
@@ -96,7 +97,6 @@ public class Department {
     public String toString() {
         return "Department{" +
                 "id=" + id +
-                ", employees=" + employees +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", budget=" + budget +
