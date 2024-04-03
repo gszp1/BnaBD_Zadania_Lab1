@@ -16,8 +16,8 @@ public class Department {
     private Long id;
 
     @OneToMany(mappedBy = "department",
-    cascade = CascadeType.ALL,
-    orphanRemoval = true)
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Employee> employees = new ArrayList<>();
 
     @Column(nullable = false, length = 50)
@@ -36,8 +36,7 @@ public class Department {
         super();
     }
 
-    public Department(String name, String description, BigDecimal budget,
-                      LocalDate establishmentDate) {
+    public Department(String name, String description, BigDecimal budget, LocalDate establishmentDate) {
         this.name = name;
         this.description = description;
         this.budget = budget;
@@ -91,6 +90,7 @@ public class Department {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
+
 
     @Override
     public String toString() {
