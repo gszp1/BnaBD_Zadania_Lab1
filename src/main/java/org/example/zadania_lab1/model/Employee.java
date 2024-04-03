@@ -13,6 +13,11 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne()
+    @JoinColumn(name = "department_id", foreignKey =
+    @ForeignKey(name = "FK_emp_dept"))
+    private Department department;
+
     @Column(name = "first_name", nullable = false, length = 20)
     private String firstName;
 
@@ -29,12 +34,14 @@ public class Employee {
         super();
     }
 
-    public Employee(String firstName, String lastName, BigDecimal salary, LocalDate employmentDate) {
+    public Employee(String firstName, String lastName, BigDecimal salary, LocalDate employmentDate,
+                    Department department) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.salary = salary;
         this.employmentDate = employmentDate;
+        this.department = department;
     }
 
     public Long getId() {
@@ -63,6 +70,14 @@ public class Employee {
 
     public BigDecimal getSalary() {
         return salary;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public void setSalary(BigDecimal salary) {
